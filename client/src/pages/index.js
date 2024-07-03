@@ -1,0 +1,15 @@
+export { default as DashboardLayout } from './DashboardLayout';
+export { default as Landing } from './Landing';
+export { default as HomeLayout } from './HomeLayout';
+export { default as Register } from './Register';
+export { default as Login } from './Login';
+export { default as Error } from './Error';
+export { default as Stats } from './Stats';
+export { default as AddProduct } from './AddProduct';
+export { default as AllProducts } from './AllProducts';
+export { default as EditProduct } from './EditProduct';
+export { default as Profile } from './Profile';
+export { default as Users } from './Users';
+export { default as Orders } from './Orders';
+export { default as Reviews } from './Reviews';
+export { default as SingleProductPage } from './SingleProductPage';
