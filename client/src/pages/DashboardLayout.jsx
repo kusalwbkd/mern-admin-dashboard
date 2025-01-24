@@ -6,41 +6,41 @@ import { toast } from 'react-toastify'
 
 
 
+const DashBoardContext = createContext()
 
-const DashBoardContext=createContext()
 
-export const loader=async()=>{
+export const loader = async () => {
   try {
+    const response1 = await customFetch.get('/users/showMe')
+    const user = await response1.data.user
+
+    const response2 = await customFetch.get('/notifications')
+    const notifications = await response2.data.notification
 
 
-const response1=await customFetch.get('/users/showMe')
-const user=await response1.data.user
-
-const response2=await customFetch.get('/notifications')
-const notifications=await response2.data.notification
-
-
-return {user,notifications}
+    return { user, notifications }
 
   } catch (error) {
+    toast.error(error?.response?.data?.msg)
     return redirect('/')
   }
 }
 
 
 const DashboardLayout = () => {
-  const {user}=useLoaderData();
+
+  const { user } = useLoaderData();
 
 
   const [showSidebar, setShowSidebar] = useState(false);
 
-  
 
-  const navigate=useNavigate()
- 
+
+  const navigate = useNavigate()
+
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
-    console.log(showSidebar);
+
   };
 
   const logoutUser = async () => {
@@ -49,36 +49,36 @@ const DashboardLayout = () => {
     toast.success('Logging out...');
   };
 
-  
+
 
 
   return (
-   <DashBoardContext.Provider value={{user,showSidebar,logoutUser,toggleSidebar}}>
-    <section >
-      <main className=' grid grid-cols-1 md:grid-cols-my-columns'>
-      <SmallSidebar/>
-     <BigSidebar/>
-        <div>
-          <Navbar />
-        
-          <div className=' w-[90vw]  my-0 mx-auto py-8 px-0 md:w-[90%] '>
-            <Outlet  context={{user}}/>
-          
+    <DashBoardContext.Provider value={{ user, showSidebar, logoutUser, toggleSidebar }}>
+      <section >
+        <main className=' grid grid-cols-1 md:grid-cols-my-columns'>
+          <SmallSidebar />
+          <BigSidebar />
+          <div>
+            <Navbar />
+
+            <div className=' w-[90vw]  my-0 mx-auto py-8 px-0 md:w-[90%] '>
+              <Outlet context={{ user }} />
+
+            </div>
           </div>
-        </div>
-     
-      </main>
-    </section>
+
+        </main>
+      </section>
     </DashBoardContext.Provider>
-  
-
-    
 
 
-  
-);
 
-  
+
+
+
+  );
+
+
 }
-export const useDashboardContext=()=>useContext(DashBoardContext)
+export const useDashboardContext = () => useContext(DashBoardContext)
 export default DashboardLayout

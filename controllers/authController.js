@@ -16,9 +16,10 @@ export const register = async (req, res) => {
 
   export const login = async (req, res) => {
 
-    const user=await User.findOne({email:req.body.email})
+    const user=await User.findOne({email:req.body.email})||null
+   
 
-    const isPasswordCorrect=await comparePassword(req.body.password,user.password)
+    const isPasswordCorrect=user && await comparePassword(req.body.password,user?.password)
     
     const validUser=user && isPasswordCorrect
 

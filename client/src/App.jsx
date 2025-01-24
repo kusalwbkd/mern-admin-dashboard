@@ -7,8 +7,6 @@ import { AddProduct, AllProducts, DashboardLayout, EditProduct, Error, HomeLayou
 import { action as registerAction } from './pages/Register'
 import {action as loginAction} from './pages/Login'
 import{action as addProductAction} from './pages/AddProduct'
-import {action as deleteProductAction} from './pages/DeleteProduct'
-import{action as updateNotificationAction} from './pages/UpdateNotifications'
 import{action as editProducAction} from './pages/EditProduct'
 
 //loaders
@@ -72,16 +70,7 @@ const router=createBrowserRouter([
             loader:editProducLoader
 
           },
-          {
-            path:'delete-product/:id',
-            action:deleteProductAction,
-          },
-          {
-            path:'notifications-update/:id',
-            action:updateNotificationAction
-          },
-
-
+        
           {
             path: 'profile',
             element: <Profile />,

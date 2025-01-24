@@ -3,49 +3,58 @@ import { useLoaderData, useLocation, useNavigate } from 'react-router-dom'
 
 const PaginationContainer = () => {
 
-  const{currentPage,numOfPages}=useLoaderData()
+  const { currentPage, numOfPages } = useLoaderData()
 
-  const pages=Array.from({length:numOfPages},(_,index)=>{
-    return index+1
+  const pages = Array.from({ length: numOfPages }, (_, index) => {
+    return index + 1
   })
 
-  const{search,pathname}=useLocation()
-  
-  const navigate=useNavigate()
+  const { search, pathname } = useLocation()
 
-  const hadlePageNumber=(pageNumber)=>{
-    
-    const searchParams=new URLSearchParams(search)
-    
-    searchParams.set('page',pageNumber)
+  const navigate = useNavigate()
+
+  const hadlePageNumber = (pageNumber) => {
+
+    const searchParams = new URLSearchParams(search)
+    searchParams.set('page', pageNumber)
     navigate(`${pathname}?${searchParams.toString()}`)
+  }
+  if (numOfPages < 2) {
+    return null
+  }
 
-    
-   
-    }
-    if(numOfPages<2){
-      return null
-        }
-  
   return (
     <div className='mt-16 flex justify-end'>
 
-<div className="join">
-  <button className='btn btn-xs sm:btn-md join-item' onClick={()=>hadlePageNumber(1)}>
-Prev
-  </button>
-{pages.map((page)=>{
-return(
-  <button className={`btn btn-xs md:btn-md join-item ${page === currentPage ?' bg-base-300 border-base-300':''}`}  key={page} onClick={()=>hadlePageNumber(page)}>
-  {page}
-  </button>
-)
-})}
-  <button className='btn btn-xs sm:btn-md join-item' onClick={()=>hadlePageNumber(1)}>
-Next
-  </button>
-</div>
- </div>
+      <div className="join">
+        <button className='btn btn-xs sm:btn-md join-item'
+           onClick={() => {
+            let prevPage = currentPage - 1;
+            if (prevPage < 1) prevPage = pageCount;
+            hadlePageNumber(prevPage);
+          }}
+        >
+          Prev
+        </button>
+        {pages.map((page) => {
+          return (
+            <button className={`btn btn-xs md:btn-md join-item ${page === currentPage ? ' bg-base-300 border-base-300' : ''}`} key={page} onClick={() => hadlePageNumber(page)}>
+              {page}
+            </button>
+          )
+        })}
+        <button className='btn btn-xs sm:btn-md join-item'
+         onClick={() => {
+          let nextPage = currentPage + 1;
+          if (nextPage > numOfPages) nextPage = 1;
+          hadlePageNumber(nextPage);
+        }}
+        
+        >
+          Next
+        </button>
+      </div>
+    </div>
   )
 }
 

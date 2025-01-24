@@ -4,13 +4,16 @@ import UsersContainer from '../components/UsersContainer'
 import customFetch from '../utils/customFetch'
 import { toast } from 'react-toastify'
 
-export const loader=async({params,request})=>{
+export const loader = async ({ params, request }) => {
   try {
-    const params=Object.fromEntries([...new URL(request.url).searchParams.entries()])
+    const params = Object.fromEntries([...new URL(request.url).searchParams.entries()])
 
-  const{data} = await customFetch.get('/users',{params})
-  return data
-    
+    const response = await customFetch.get('/users', { params })
+    const { users, totalUsers, numOfPages, currentPage } = response.data
+
+
+    return { users, totalUsers, numOfPages, currentPage }
+
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -20,9 +23,9 @@ export const loader=async({params,request})=>{
 const Users = () => {
   return (
     <>
-    <UsersContainer/>
-    <PaginationContainer/>
-    
+      <UsersContainer />
+      <PaginationContainer />
+
     </>
   )
 }

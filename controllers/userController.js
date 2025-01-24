@@ -13,7 +13,7 @@ export const getAllUsers=async(req,res)=>{
     const numOfPages = Math.ceil(totalUsers / limit);
     const users=await User.find({role:"user"}).skip(skip).limit(limit).sort({createdAt:"-1"}).populate("orders").select("-password")
 
-    res.status(StatusCodes.OK).json({users,numOfPages,currenPage:page,totalUsers})
+    res.status(StatusCodes.OK).json({users,numOfPages,currentPage:page,totalUsers})
 }
 
 
